@@ -2,7 +2,8 @@
   "name": "vite-project",
   "private": true,
   "version": "0.0.0",
-  "proxy": "http://localhost:5000",
+  "homepage": "https://christain-konnect-u0tn.onrender.com",
+  "proxy": "https://christain-konnect.onrender.com",
   "type": "module",
   "scripts": {
     "dev": "vite",
