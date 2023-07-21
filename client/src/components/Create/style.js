@@ -13,6 +13,7 @@ const style = {
     span: 'bg-red-200 rounded-md p-2 text-black/80 mr-2',
     profileCont: `${styles.flexStart2} mt-10 cursor-pointer`,
     img: 'w-[50px] h-[50px] object-contain rounded-full',
+    imgText: 'object-contain rounded-full bg-red-200 text-center w-full h-full flex justify-center items-center font-sans font-bold text-lg',
     text: 'font-semibold max-w-[150px]',
     overlay: `${styles.flexCenter} absolute top-0 w-full h-screen bg-black/50 text-white left-0`,
     catContainer: 'bg-black/80 rounded-md max-h-[650px] p-3 md:w-[50%] w-[80%]',

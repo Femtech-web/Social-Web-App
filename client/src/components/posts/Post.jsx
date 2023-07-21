@@ -75,7 +75,8 @@ const Post = ({ title, context, creator, createdAt, selectedFile, imgUrl, _id, n
     }
   }
 
-
+  const text = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex neque doloribus id recusandae impedit odio ipsa unde nobis dolores, assumenda dicta deserunt iste natus et ratione fugiat corporis, soluta at accusantium eligendi.Necessitatibus temporahic quasi iste autem consectetur numquam harum odio repellat?Omnis sint eaque consectetur quam nemo quisquam?'
+  
   return (
     <div className='w-full my-6'>
       <div className={styles.topCont} 

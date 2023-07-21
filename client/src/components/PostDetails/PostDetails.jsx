@@ -10,6 +10,7 @@ import Post from '../posts/Post';
 import styles from './style'
 import Comment from './Comment';
 import { fetchAPost } from '../../Redux/apiCalls';
+import { Spinner } from '../Elements';
 import { fetchComments } from '../../Redux/apiCalls';
 import Sidebar from '../Sidebar/Sidebar';
 
@@ -36,6 +37,10 @@ const PostDetails = () => {
 
     commentsRef.current.scrollIntoView({ behavior: 'smooth'})
   };
+
+  if(!post){
+    return <Spinner />
+  }
 
   return (
     <div className='bg-gray-200'>

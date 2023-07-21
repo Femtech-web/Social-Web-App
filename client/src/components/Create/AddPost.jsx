@@ -32,6 +32,7 @@ const AddPost = () => {
   const isFetching =   useSelector(state => state.post?.fetching);
   const post = editId ? posts.find((item) => item._id === editId) : null;
   const user = JSON.parse(localStorage.getItem('user'));
+  const imgUrl = null;
 
   useEffect(() => {
     if(post){
@@ -62,10 +63,10 @@ const AddPost = () => {
           </button>
         </div>
         <div className={styles.profileCont}>
-          <img 
-            src="./images/pic.jpg" 
-            alt="profile image" 
-            className={styles.img}/>
+        <div className={styles.imgCont}>
+           {imgUrl !== undefined ? <img src={imgUrl} alt='' className={styles.img} /> 
+           : <p className={styles.imgText}>{fullname?.charAt(0)}</p>}
+          </div>
           <div className='ml-2'>
             <p className={styles.text}>{user?.result?.fullname}</p>
             <small className={styles.small}>
