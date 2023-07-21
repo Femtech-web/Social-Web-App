@@ -12,7 +12,7 @@ const Likes = ({ likes }) => {
   const user = useSelector((state) => state.user.currentUser)
   const userId = (user?.result?.googleId || user?.result?._id) ;
 
-  if(likes.length > 0){
+  if(likes?.length > 0){
     return likes.find((like) => like === userId) 
     ? (
       <><AiFillLike fontSize={20} className='mb-1'/> &nbsp;{likes.length}</>

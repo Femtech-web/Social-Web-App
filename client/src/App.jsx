@@ -3,7 +3,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate} from 'react-router-dom';
 
-import { Landing, Home, Auth, CreatePost, PostDetail, Prayer } from './pages';
+import { Landing, Home, Auth, CreatePost, PostDetail, Prayer, Profile, Categories } from './pages';
 import { useSelector } from 'react-redux';
 
 
@@ -20,6 +20,8 @@ const App = () => {
         <Route exact path='/create-post' element={<CreatePost />} />
         <Route exact path='/posts/:id' element={<PostDetail />} />
         <Route exact path='/prayer' element={<Prayer />} />
+        <Route exact path='/profile' element={<Profile />} />
+        <Route exact path='/Categories' element={<Categories />} />
       </Routes>
     </Router>
   )

@@ -31,6 +31,7 @@ const AddPost = () => {
   const editId = useSelector(state => state.post?.currentId);
   const isFetching =   useSelector(state => state.post?.fetching);
   const post = editId ? posts.find((item) => item._id === editId) : null;
+  const user = JSON.parse(localStorage.getItem('user'));
 
   useEffect(() => {
     if(post){
@@ -47,7 +48,7 @@ const AddPost = () => {
         <div className={styles.header}>
           <BsArrowLeft fontSize={20} 
             className='cursor-pointer' 
-            onClick={() => window.history.back()}
+            onClick={() => navigate('/posts')}
           />
           <p className='font-bold text-lg '>
             {mobile ? 'Post' : 'Create a new Post'}
@@ -66,7 +67,7 @@ const AddPost = () => {
             alt="profile image" 
             className={styles.img}/>
           <div className='ml-2'>
-            <p className={styles.text}>Akolade Oluwafemi</p>
+            <p className={styles.text}>{user?.result?.fullname}</p>
             <small className={styles.small}>
               <BiCurrentLocation className='mr-1' fontSize={20}/> 
               Add a Location 

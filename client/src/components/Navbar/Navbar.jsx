@@ -10,7 +10,6 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import { BiSearch } from 'react-icons/bi';
 
 import styles from './style';
-import Logo from '../Elements/Logo/Logo';
 import { useCustomState } from '../../responsive';
 import { logout } from '../../Redux/userRedux';
 import { fetchPostsBySearch } from '../../Redux/apiCalls';
@@ -46,8 +45,12 @@ const Navbar = ({ searchQuery, setSearchQuery }) => {
 
   return (
     <div className={styles.container}>
-      {mobile && <p className='mb-3 font-semibold cursor-pointer' onClick={() => navigate('/posts')}>Christain Konnect</p>}
-      <div className='w-full flex justify-between'>
+      <div className='w-full flex justify-between items-center'>
+        {mobile 
+          && <Link to='/posts'>
+            <img src='./images/no-bg.png' className='w-[50%] text-center mb-2'/>
+          </Link>
+        }
         <div className='relative'>
           <BiSearch 
             className={styles.icon} 
@@ -55,19 +58,19 @@ const Navbar = ({ searchQuery, setSearchQuery }) => {
             onClick={handleSearch}
           />
           <input type="text"  
-            className={styles.input}
+            className={styles.input(mobile)}
             placeholder='Search...'
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
         <div className={styles.rightBar}>
-          <Link to='/create-post'>
+         {!mobile && <Link to='/create-post'>
             <button type='button' className={styles.btn}>
-              Create Post
-              <AiOutlinePlus className='ml-3' fontSize={20}/>
+              {!mobile && 'Create Post'}
+              <AiOutlinePlus className={!mobile && 'ml-3'} fontSize={20}/>
             </button>
-          </Link>
+          </Link>}
           {!mobile && <div className={styles.profileCont}>
             <div className={styles.imgCont}>
             {imgUrl ? <img src={imgUrl} alt='' className={styles.img} /> 

@@ -13,6 +13,7 @@ import { CiShare1 } from 'react-icons/ci'
 
 import styles from './style';
 import Likes from './Likes';
+import { useCustomState } from '../../responsive';
 import { deletePost, fetchLike } from '../../Redux/apiCalls';
 import { removeCurrentId, setCurrentId } from '../../Redux/postRedux';
 
@@ -24,11 +25,12 @@ const Post = ({ title, context, creator, createdAt, selectedFile, imgUrl, _id, n
   const [ full, setFull ] = useState(false);
   const [ editor, setEditor ] = useState(false);
   const [ postLikes, setPostLikes ] = useState(likes);
+  const [ mobile ] = useCustomState();
 
   const user = useSelector((state) => state.user.currentUser)
   const userId = (user?.result?.googleId || user?.result?._id) ;
   const isNotCreator = creator !== user?.result?._id;
-  const hasLikedPost = postLikes.find((id) => id === userId);
+  const hasLikedPost = postLikes?.find((id) => id === userId);
 
   const imgAmount = selectedFile?.length !== 0 ? selectedFile : null;
   const one = imgAmount?.length === 1;
@@ -76,14 +78,14 @@ const Post = ({ title, context, creator, createdAt, selectedFile, imgUrl, _id, n
   const text = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex neque doloribus id recusandae impedit odio ipsa unde nobis dolores, assumenda dicta deserunt iste natus et ratione fugiat corporis, soluta at accusantium eligendi.Necessitatibus temporahic quasi iste autem consectetur numquam harum odio repellat?Omnis sint eaque consectetur quam nemo quisquam?'
   
   return (
-    <div className='w-full my-5'>
+    <div className='w-full my-6'>
       <div className={styles.topCont} 
         onClick={(e) => e.target.className.includes('top-container') && navigate(`/posts/${_id}`)}
       >
         <div className={styles.profileCont}>
           <div className={styles.imgCont}>
            {imgUrl !== undefined ? <img src={imgUrl} alt='' className={styles.img} /> 
-           : <p className={styles.imgText}>{name.charAt(0)}</p>}
+           : <p className={styles.imgText}>{name?.charAt(0)}</p>}
           </div>
           <div className='ml-2'>
             <p className={styles.text}>{name}</p>
@@ -110,7 +112,7 @@ const Post = ({ title, context, creator, createdAt, selectedFile, imgUrl, _id, n
       <div className={styles.middleCont}>
         <h1 className={styles.header}>{title}</h1>
         <article className={styles.article} onClick={() => setFull(!full)}>
-         {!full ? `${context.slice(0, 250)}` : `${context}`} &nbsp;
+         {!full ? `${context?.slice(0, 250)}` : `${context}`} &nbsp;
          {!full && <span className={styles.seeMore}>...see more</span>}
         </article>
         {(one || two ) 
@@ -135,21 +137,21 @@ const Post = ({ title, context, creator, createdAt, selectedFile, imgUrl, _id, n
             </div>
         </div>}
       </div>
-      <div className={styles.btns}>
+      <div className={styles.btns(mobile)}>
         <button type='button' className={styles.btnClick} onClick={likePost}>
           <Likes likes={postLikes} />
         </button>
-        <button type='button' className={`${styles.btnClick} ml-3`} onClick={() => navigate(`/posts/${_id}`)}>
-          {comments.length !== 0 
+        <button type='button' className={`${styles.btnClick} ${mobile ? 'ml-1' : 'ml-3'}`} onClick={() => navigate(`/posts/${_id}`)}>
+          {comments?.length !== 0 
           ? (<>
               <TfiComment fontSize={18}/> 
-              <span className={styles.btnSpan}>{comments.length}</span>
+              <span className={styles.btnSpan}>{comments?.length}</span>
             </>)
-          : <p>comment</p>}
+          : <TfiComment fontSize={18}/>}
         </button>
-        <button type='button' className={`${styles.btnClick} ml-3`}>
+        <button type='button' className={`${styles.btnClick} ${mobile ? 'ml-1' : 'ml-3'}`}>
           <CiShare1 className='' fontSize={18}/> 
-          <span className={styles.btnSpan}>25</span>
+          <span className={styles.btnSpan} />
         </button>
       </div>
     </div>

@@ -7,12 +7,14 @@ import { useLocation } from 'react-router-dom';
 
 import Post from './Post';
 import styles from './style';
+import { useCustomState } from '../../responsive';
 import { fetchAllPosts } from '../../Redux/apiCalls';
 
 const Posts = ({ isNotSearchLocation, setSearchQuery }) => {
   const location = useLocation();
   const dispatch = useDispatch();
   const allPosts = useSelector(state => state.post.posts);
+  const [ mobile ] = useCustomState();
 
   useEffect(() => {
     if(location.pathname !== '/posts/search'){
@@ -22,7 +24,7 @@ const Posts = ({ isNotSearchLocation, setSearchQuery }) => {
   }, [dispatch, location, setSearchQuery])
 
   return (
-    <div className={styles.posts(isNotSearchLocation)}>
+    <div className={styles.posts(isNotSearchLocation, mobile)}>
       {allPosts.length !== 0 
       ? allPosts.map((post) => (
         <Post key={post._id} {...post} />

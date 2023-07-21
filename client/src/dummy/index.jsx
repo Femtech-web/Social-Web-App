@@ -1,23 +1,27 @@
-import { AiOutlineHome, AiOutlineUser } from "react-icons/ai"
+import { AiOutlineHome, AiOutlineUser, AiOutlinePlus } from "react-icons/ai"
 import { BiCategory } from "react-icons/bi"
 import { BsListCheck } from "react-icons/bs"
 
 export const navLinks = [
     {
         name: 'Home',
-        icon: <AiOutlineHome />
+        icon: <AiOutlineHome fontSize={27}/>
     },
     {
         name: 'Categories',
-        icon: <BiCategory />
+        icon: <BiCategory fontSize={27}/>
+    },
+    {
+        name: 'post',
+        icon: <AiOutlinePlus fontSize={27}/>
     },
     {
         name: 'Profile',
-        icon: <AiOutlineUser />
+        icon: <AiOutlineUser fontSize={27}/>
     },
     {
         name: 'Prayer requests',
-        icon: <BsListCheck />
+        icon: <BsListCheck fontSize={27}/>
     }
 ]
 

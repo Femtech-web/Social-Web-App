@@ -44,8 +44,8 @@ const PostDetails = () => {
         <Post {...post} expand={true} comments={comments}/>
         <div className='mt-6 w-full'>
           <h1>Comments</h1>
-          {comments.length !== 0 
-          ? comments.map((item, index) => (
+          {comments?.length !== 0 
+          ? comments?.map((item, index) => (
             <Comment key={index} comment={item} />
           )) 
           : <p className='text-center'>Be the first to comment</p>

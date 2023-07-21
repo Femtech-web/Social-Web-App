@@ -104,12 +104,12 @@ const likePost = async (req, res) => {
 
     try {
         const post = await Post.findById(id);
-        const index = post.likes.findIndex((id) => id === String(req.userId));
+        const index = post.likes.findIndex((_id) => _id === req.userId);
     
         if(index === -1){
             post.likes.push(req.userId);
         }else{
-            post.likes = post.likes.filter((id) => id !== req.userId)
+            post.likes = post.likes.filter((_id) => _id !== req.userId)
         }
     
         const updatedPost = await Post.findByIdAndUpdate(id, post, { new:true })

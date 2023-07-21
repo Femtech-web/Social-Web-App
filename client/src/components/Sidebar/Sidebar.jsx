@@ -15,7 +15,7 @@ const Sidebar = () => {
   const navigate = useNavigate();
   
   const Home = (link) =>  link.name === 'Home';
-  const Prayer = (link) => link.name === 'Prayer requests'
+  const Prayer = (link) => link.name === 'Prayer requests';
 
   const handleLogout = () => {
     dispatch(logout());
@@ -30,8 +30,9 @@ const Sidebar = () => {
       </Link>
     
       <div className=''>
-        {navLinks.map((link) => (
-          <NavLink
+        {navLinks.map((link, index) => (
+          index === 2 ? null
+          : <NavLink
           to={Home(link) ? '/posts': Prayer(link) ? `/${link.name.split(' ')[0].toLowerCase()}`
           :`/${link.name.toLowerCase()}`}
           key={link.name}
@@ -45,10 +46,10 @@ const Sidebar = () => {
           
         ))}
       </div>
-        <div className={styles.logout} onClick={() => handleLogout()}>
-          <AiOutlinePoweroff className='mr-3'/>
-          <span className='font-semibold '>Logout</span>
-        </div>
+      <div className={styles.logout} onClick={() => handleLogout()}>
+        <AiOutlinePoweroff className='mr-3'/>
+        <span className='font-semibold '>Logout</span>
+      </div>
     </div>
   )
 }

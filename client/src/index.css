@@ -4,7 +4,7 @@
 
 
 :root {
-  font-synthesis: none;
+  font-synthesis: weight;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -42,6 +42,7 @@ body {
 .img-sub1, .img-sub2{
   width: 50%;
   display: flex;
+  /* grid-template-columns: repeat(1); */
   flex-direction: column;
   gap: 3px;
 }
@@ -52,7 +53,7 @@ body {
 }
 
 .flex-img1{
-  height: 50%;
+  min-height: 50%;
 }
 
 .flex-img2{
@@ -75,12 +76,12 @@ body {
   animation-name: icon;
   animation-duration: 0.7s;
 }
-.top-container{}
 
 .isNotCreator{
   cursor: not-allowed;
   opacity: 0.5;
 }
+
 .no-scrollbar::-webkit-scrollbar{
   display: none;
 }
@@ -102,12 +103,6 @@ body {
   font-weight: 900;
 }
 
-/* primary #ff0033
-rgb(255,0,51)  or #FF0000*/
-
-/* Accent #006600
-rgb(0,102,0) */
-
 @keyframes icon{
   0%{
     opacity: 0;
@@ -122,6 +117,10 @@ rgb(0,102,0) */
   .line{
     font-size: 2.5rem;
     line-height: 2.7rem;
+  }
+
+  .flex-img2, .flex-img1{
+   flex: 1;
   }
 }
 
