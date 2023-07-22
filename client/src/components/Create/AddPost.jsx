@@ -26,6 +26,7 @@ const AddPost = () => {
   const [ categoryActive, setCategoryActive ] = useState(false);
   
   const {result: {fullname}} = useSelector(state => state.user?.currentUser);
+  const {result: {picture}} = useSelector(state => state.user?.currentUser);
   const posts = useSelector(state => state.post?.posts);
   const cat = useSelector(state => state.post?.categories);
   const editId = useSelector(state => state.post?.currentId);
@@ -64,7 +65,7 @@ const AddPost = () => {
         </div>
         <div className={styles.profileCont}>
         <div className={styles.imgCont}>
-           {imgUrl !== undefined ? <img src={imgUrl} alt='' className={styles.img} /> 
+           {picture ? <img src={picture} alt='profile picture' className={styles.img} /> 
            : <p className={styles.imgText}>{fullname?.charAt(0)}</p>}
           </div>
           <div className='ml-2'>

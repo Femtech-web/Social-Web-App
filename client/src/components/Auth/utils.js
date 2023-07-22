@@ -23,8 +23,8 @@ export const googleDispatch = (dispatch) => {
         );
         
         try {
-            dispatch(loginSuccess({currentUser: data, token: tokenResponse.access_token}))
             console.log({currentUser: data, token: tokenResponse.access_token});
+            dispatch(loginSuccess({result: data, token: tokenResponse.access_token}))
         } catch (error) {
             console.log(error)
         }
