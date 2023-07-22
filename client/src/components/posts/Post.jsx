@@ -85,7 +85,7 @@ const Post = ({ title, context, creator, createdAt, selectedFile, imgUrl, _id, n
       >
         <div className={styles.profileCont}>
           <div className={styles.imgCont}>
-           {picture ? <img src={picture} alt='profile picture' className={styles.img} /> 
+           {picture || imgUrl ? <img src={picture || imgUrl} alt='profile picture' className={styles.img} /> 
            : <p className={styles.imgText}>{name?.charAt(0)}</p>}
           </div>
           <div className='ml-2'>
@@ -119,7 +119,7 @@ const Post = ({ title, context, creator, createdAt, selectedFile, imgUrl, _id, n
         {(one || two ) 
         && <div className={`${one ? 'image-grid1': 'image-grid2'}`}>
           {imgAmount?.map((item) => (
-            <img src={item} alt="" key={item} className='grid-img'/>
+            <img src={item} alt="post image" key={item} className='grid-img'/>
           ))}
         </div>}
         {(three || four || five ) 
@@ -127,13 +127,13 @@ const Post = ({ title, context, creator, createdAt, selectedFile, imgUrl, _id, n
             <div className='img-sub1'>
               {imgAmount?.map((item, index) => (
               index <= 1 
-              ? <img src={item} alt="" key={item} className='flex-img1'/> : null
+              ? <img src={item} alt="post image" key={item} className='flex-img1'/> : null
               ))}
             </div>
             <div className='img-sub2'>
               {imgAmount?.map((item, index) => (
               index >= 2
-              ? <img src={item} alt="" key={item} className='flex-img2'/> : null
+              ? <img src={item} alt="post image" key={item} className='flex-img2'/> : null
               ))}
             </div>
         </div>}

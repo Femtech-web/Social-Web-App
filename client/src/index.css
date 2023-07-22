@@ -21,6 +21,7 @@ body {
 .image-grid1{
   height: 400px;
   width: 100%;
+  display: flex;
   margin: 1rem 0;
 }
 
@@ -42,7 +43,6 @@ body {
 .img-sub1, .img-sub2{
   width: 50%;
   display: flex;
-  /* grid-template-columns: repeat(1); */
   flex-direction: column;
   gap: 3px;
 }
@@ -61,7 +61,7 @@ body {
 }
 
 .grid-img{
-  width: 100%;
+  flex: 1;
   height: 100%;
   object-fit: cover;
 }
@@ -122,5 +122,6 @@ body {
   .flex-img2, .flex-img1{
    flex: 1;
   }
+
 }
 

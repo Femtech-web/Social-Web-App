@@ -21,15 +21,20 @@ const Navbar = ({ searchQuery, setSearchQuery }) => {
   const [ mobile ] = useCustomState();
   const [ user, setUser ] = useState(JSON.parse(localStorage.getItem('user')) || null);
   const {result: {picture}} = useSelector(state => state.user?.currentUser);
-  const imgUrl = null;
 
   useEffect(() => {
     const token = user?.token;
 
-    if(token){
-      const decodedToken = decode(token);
+    let decodedToken;
 
-      if(decodedToken.exp * 1000 < new Date().getTime()) dispatch(logout());
+    if(token !== undefined){
+      try {
+        decodedToken = decode(token);
+      } catch (error) {
+        console.log(error);
+      }
+
+      if(decodedToken?.exp * 1000 < new Date().getTime()) dispatch(logout());
     }
     
     setUser(JSON.parse(localStorage.getItem('user')))
