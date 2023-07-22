@@ -28,6 +28,7 @@ const Post = ({ title, context, creator, createdAt, selectedFile, imgUrl, _id, n
   const [ mobile ] = useCustomState();
 
   const user = useSelector((state) => state.user.currentUser)
+  const {result: {picture}} = useSelector(state => state.user?.currentUser);
   const userId = (user?.result?.googleId || user?.result?._id) ;
   const isNotCreator = creator !== user?.result?._id;
   const hasLikedPost = postLikes?.find((id) => id === userId);
@@ -84,7 +85,7 @@ const Post = ({ title, context, creator, createdAt, selectedFile, imgUrl, _id, n
       >
         <div className={styles.profileCont}>
           <div className={styles.imgCont}>
-           {imgUrl !== undefined ? <img src={imgUrl} alt='' className={styles.img} /> 
+           {picture ? <img src={picture} alt='profile picture' className={styles.img} /> 
            : <p className={styles.imgText}>{name?.charAt(0)}</p>}
           </div>
           <div className='ml-2'>

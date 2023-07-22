@@ -4,7 +4,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import decode from 'jwt-decode'
 import { AiOutlinePlus } from 'react-icons/ai';
 import { BiSearch } from 'react-icons/bi';
@@ -20,6 +20,7 @@ const Navbar = ({ searchQuery, setSearchQuery }) => {
   const navigate = useNavigate();
   const [ mobile ] = useCustomState();
   const [ user, setUser ] = useState(JSON.parse(localStorage.getItem('user')) || null);
+  const {result: {picture}} = useSelector(state => state.user?.currentUser);
   const imgUrl = null;
 
   useEffect(() => {
@@ -73,11 +74,11 @@ const Navbar = ({ searchQuery, setSearchQuery }) => {
           </Link>}
           {!mobile && <div className={styles.profileCont}>
             <div className={styles.imgCont}>
-            {imgUrl ? <img src={imgUrl} alt='' className={styles.img} /> 
-            : <p className={styles.imgText}>{user?.result?.fullname.charAt(0)}</p>}
+            {picture ? <img src={picture} alt='profile picture' className={styles.img} /> 
+            : <p className={styles.imgText}>{user?.result?.fullname.charAt(0) || user?.result?.name.charAt(0)}</p>}
             </div>
             <div className='ml-2'>
-              <p className={styles.text}>{user?.result?.fullname}</p>
+              <p className={styles.text}>{user?.result?.fullname || user?.result?.name}</p>
               <small className='text-slate-500 block -mt-1'>see your profile</small>
             </div>
           </div>}

@@ -25,7 +25,7 @@ const AddPost = () => {
   const [ inputText, setInputText ] = useState(initialText);
   const [ categoryActive, setCategoryActive ] = useState(false);
   
-  const {result: {fullname}} = useSelector(state => state.user?.currentUser);
+  const {result} = useSelector(state => state.user?.currentUser);
   const {result: {picture}} = useSelector(state => state.user?.currentUser);
   const posts = useSelector(state => state.post?.posts);
   const cat = useSelector(state => state.post?.categories);
@@ -33,7 +33,7 @@ const AddPost = () => {
   const isFetching =   useSelector(state => state.post?.fetching);
   const post = editId ? posts.find((item) => item._id === editId) : null;
   const user = JSON.parse(localStorage.getItem('user'));
-  const imgUrl = null;
+  const fullname = result.fullname || result.name;
 
   useEffect(() => {
     if(post){
@@ -69,7 +69,7 @@ const AddPost = () => {
            : <p className={styles.imgText}>{fullname?.charAt(0)}</p>}
           </div>
           <div className='ml-2'>
-            <p className={styles.text}>{user?.result?.fullname}</p>
+            <p className={styles.text}>{user?.result?.fullname || user?.result?.name}</p>
             <small className={styles.small}>
               <BiCurrentLocation className='mr-1' fontSize={20}/> 
               Add a Location 
