@@ -10,9 +10,6 @@ const fetchPosts = async (req, res) => {
 const fetchPost = async (req, res) => {
     const { id } = req.params;
 
-    if(!req.userId) return res.status(404).json({ message: 'You are not authenticated, pls login!'});
-    if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('no post with that id');
-
     try {
         const post = await Post.findById(id);
         res.status(200).json(post);
@@ -38,11 +35,8 @@ const fetchPostsBySearch = async (req, res) => {
 const savePost = async (req, res) => {
     const body = req.body; 
 
-    if(!req.userId){
-        res.status(404).json({message: 'You are not authenticated, pls login!'})
-    };
-
     const newPost = new Post({creator: req.userId, createdAt: new Date().toISOString(), selectedFile: body.img, ...body})
+    
     try {
         await newPost.save()
 
@@ -57,11 +51,6 @@ const updatePost = async (req, res) => {
     const { id } = req.params;
     const post = req.body;
     const existingPost = await Post.findById(id);
-
-    if(!req.userId){
-        res.status(404).json({message: 'You are not authenticated, pls login!'})
-    };
-
 
     if(!existingPost){
         res.status(404).json({message: 'Post not found!'});
@@ -79,10 +68,6 @@ const deletePost = async (req, res) => {
     const { id } = req.params;
     const existingPost = await Post.findById(id);
 
-    if(!req.userId){
-        res.status(404).json({message: 'You are not authenticated, pls login!'})
-    };
-
     if(!existingPost){
         res.status(404).json({message: 'Post not found!'});
     }
@@ -98,9 +83,6 @@ const deletePost = async (req, res) => {
 
 const likePost = async (req, res) => {
     const { id } = req.params;
-
-    if(!req.userId) return res.status(404).json({ message: 'You are not authenticated, pls login!'});
-    if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('no post with that id');
 
     try {
         const post = await Post.findById(id);
@@ -122,9 +104,6 @@ const likePost = async (req, res) => {
 const commentPost = async(req, res) => {
     const { id } = req.params;
     const { finalComment } = req.body;
-
-    if(!req.userId) return res.status(404).json({ message: 'You are not authenticated, pls login!'});
-    if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('no post with that id');
 
     try {
         const post = await Post.findById(id);

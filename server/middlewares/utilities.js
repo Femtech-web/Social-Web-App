@@ -1,6 +1,8 @@
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto')
 const util = require('util');
+const mongoose = require('mongoose');
+const { validationResult } = require('express-validator');
 
 const scrypt = util.promisify(crypto.scrypt);
 
@@ -47,4 +49,49 @@ const verifyToken = async (req, res, next) => {
     }
 } 
 
-module.exports = { createHashedPassword, comparePasswords, verifyToken }
+const handleErrors = (req, res, next) => {
+    const errors = validationResult(req);
+    let newErrors = [];
+
+    if(!errors.isEmpty()){
+      const mappedErrors = errors.mapped();
+
+      for(let key in mappedErrors){
+        newErrors.push(mappedErrors[key]);
+      }
+    }
+
+    for(let error of newErrors){
+        switch (error.path) {
+            case 'email':
+                return res.status(400).send({ message: `${error.msg}`});
+                break;
+            case 'Password':
+                return res.status(400).send({ message: `${error.msg}`});
+                break;
+            case 'confirmPassword':
+                return res.status(400).send({ message: `${error.msg}`});
+                break;
+            default:
+                return next();
+        }
+                
+    }
+
+    next();
+}
+
+const checkAuth = (req, res, next) => {
+    if(!req.userId) return res.status(404).json({ message: 'You are not authenticated, pls login!'});
+
+    next();
+}
+
+const checkPostAuth = (req, res, next) => {
+    if(!req.userId) return res.status(404).json({ message: 'You are not authenticated, pls login!'});
+    if(!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(404).send('no post with that id');
+
+    next();
+}
+
+module.exports = { createHashedPassword, comparePasswords, verifyToken, handleErrors, checkAuth, checkPostAuth }

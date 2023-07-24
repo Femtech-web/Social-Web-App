@@ -1,10 +1,16 @@
 const express = require('express');
+
 const { signUp, signIn } = require('../controllers/auth');
+const { handleErrors } = require('../middlewares/utilities');
+const { requireFullname, requireEmail, requirePassword, 
+requirePasswordConfirmation, requireEmailExists, requirePasswordExists } = require( '../middlewares/validators');
+    
 
 const router = express.Router();
 
-router.post('/signup', signUp);
-router.post('/signin', signIn);
+router.post('/signup', [requireFullname, requireEmail, 
+requirePassword, requirePasswordConfirmation], handleErrors, signUp);
+router.post('/signin', [requireEmailExists, requirePasswordExists], signIn);
 
 
 module.exports = router;
