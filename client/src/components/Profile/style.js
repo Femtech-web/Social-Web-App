@@ -9,7 +9,7 @@ const style = {
     logoutBtn: 'border-red-600 border-[2px] hover:bg-red-200 py-2 flex justify-center mx-5 items-center cursor-pointer text-white',
     logoutText: 'font-semibold text-black',
     icon: 'mr-3 text-black',
-    img: 'object-contain rounded-full',
+    img: 'object-contain rounded-full w-full',
     imgText: 'object-contain rounded-full bg-red-200 text-center w-full h-full flex justify-center items-center font-sans font-bold text-3xl',
     text: 'font-semibold text-xl max-w-[150px] mt-1',
 }
