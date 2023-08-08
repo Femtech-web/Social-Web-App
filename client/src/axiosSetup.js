@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = 'https://christain-konnect.onrender.com/api'
+const BASE_URL = 'https://christain-konnect.onrender.com/api';
 
 const privateRequest = axios.create({
     baseURL: BASE_URL,

@@ -2,11 +2,16 @@
 
 import React from 'react';
 import PrayerRequest from '../components/Prayer/PrayerRequest';
+import BottomBar from '../components/BottomBar/BottomBar';
+import { useCustomState } from '../responsive';
 
 const Prayer = () => {
+const [mobile] = useCustomState();
+
   return (
     <div>
         <PrayerRequest />
+        {mobile && <BottomBar />}
     </div>
   )
 }

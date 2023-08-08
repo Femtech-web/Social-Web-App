@@ -7,7 +7,7 @@ const style = {
     rightBar: `${styles.flexEvenly}`,
     btn:  `${styles.flexCenter} text-white bg-red-600 py-3 px-4 rounded-full hover:bg-red-700 dark outline-none`, 
     profileCont: `${styles.flexEvenly} ml-6 cursor-pointer`,
-    imgCont: 'w-[45px] h-[45px] object-contain rounded-full',
+    imgCont: 'w-[45px] h-[45px] rounded-full',
     img: 'object-contain rounded-full',
     imgText: 'object-contain rounded-full bg-red-200 text-center w-full h-full flex justify-center items-center font-sans font-bold text-lg',
     text: 'font-semibold max-w-[150px]'

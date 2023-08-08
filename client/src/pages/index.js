@@ -4,8 +4,9 @@ import Auth from "./Auth";
 import CreatePost from "./CreatePost";
 import PostDetail from "./PostDetail";
 import Prayer from "./Prayer";
-import Categories from './Categories';
-import Profile from './Profile'
+import Peoples from './Peoples';
+import Profile from './Profile';
+import Messages from "./Messages";
 
 export { 
     Landing,
@@ -14,6 +15,7 @@ export {
     CreatePost,
     PostDetail,
     Prayer,
-    Categories,
-    Profile
+    Peoples,
+    Profile,
+    Messages
 }

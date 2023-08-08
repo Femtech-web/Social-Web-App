@@ -1,10 +1,11 @@
 /* eslint-disable no-unused-vars */
 
-import React from 'react'
+import React from 'react';
 
 const PrayerRequest = () => {
   return (
-    <div className='text-center'>Coming soon...</div>
+    <div className='text-center '>Coming soon...</div>
+
   )
 }
 

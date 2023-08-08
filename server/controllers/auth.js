@@ -3,6 +3,12 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user')
 const { createHashedPassword } = require('../middlewares/utilities');
 
+const getUsers = async (req, res) => {
+    const allUsers = await User.find().sort({fullname: 1})
+
+    res.status(200).json(allUsers)
+}
+
 const signUp = async (req, res) => {
     const { fullname, email, password } = req.body;
     
@@ -31,4 +37,4 @@ const signIn = async (req, res) => {
     }   
 };
 
-module.exports = { signUp, signIn };
+module.exports = { signUp, signIn, getUsers };

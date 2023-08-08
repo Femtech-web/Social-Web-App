@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { signUp, signIn } = require('../controllers/auth');
+const { signUp, signIn, getUsers } = require('../controllers/auth');
 const { handleErrors } = require('../middlewares/utilities');
 const { requireFullname, requireEmail, requirePassword, 
 requirePasswordConfirmation, requireEmailExists, requirePasswordExists } = require( '../middlewares/validators');
@@ -8,6 +8,7 @@ requirePasswordConfirmation, requireEmailExists, requirePasswordExists } = requi
 
 const router = express.Router();
 
+router.get('/', getUsers);
 router.post('/signup', [requireFullname, requireEmail, 
 requirePassword, requirePasswordConfirmation], handleErrors, signUp);
 router.post('/signin', [requireEmailExists, requirePasswordExists], signIn);

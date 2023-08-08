@@ -2,12 +2,17 @@
 
 import React from 'react';
 import User from '../components/Profile/User';
+import BottomBar from '../components/BottomBar/BottomBar';
+import { useCustomState } from '../responsive';
 
 const Profile = () => {
+  const [mobile] = useCustomState();
   
-
   return (
-   <User /> 
+    <div>
+      <User /> 
+      {mobile && <BottomBar />}
+    </div>
   )
 }
 

@@ -1,14 +1,61 @@
 /* eslint-disable no-unused-vars */
 
-import React from 'react';
-import { HashRouter as Router, Route, Routes, Navigate} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { HashRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 
-import { Landing, Home, Auth, CreatePost, PostDetail, Prayer, Profile, Categories } from './pages';
-import { useSelector } from 'react-redux';
+import { socket } from './socket/connection';
+import { Landing, Home, Auth, CreatePost, PostDetail, Prayer, Profile, Peoples, Messages } from './pages';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchMessages } from './Redux/apiCalls';
+import { populateMessages } from './Redux/messageRedux';
 
 
 const App = () => {
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user.currentUser);
+  const [isConnected, setIsConnected] = useState(socket.connected);
+  const [dbMessages, setDbMessages ] = useState([]);
+
+  useEffect(() => {
+    function onConnect() {
+      setIsConnected(true);
+    }
+
+    function onDisconnect() {
+      setIsConnected(false);
+    }
+
+    socket.on('connect', onConnect);
+    socket.on('disconnect', onDisconnect);
+
+    return () => {
+      socket.off('connect', onConnect);
+      socket.off('disconnect', onDisconnect);
+    };
+  }, [])
+
+  useEffect(() => {
+    function printMessage(msg){
+      console.log(msg);
+    }
+
+    socket.on('started', printMessage)
+
+    return () => {
+      socket.off('started', printMessage)
+    }
+  }, [])
+
+  useEffect(() => {
+    const getMessages = async () => {
+      const allMessages = await fetchMessages();
+
+      setDbMessages(allMessages)
+      dispatch(populateMessages(allMessages));
+    }
+
+    getMessages();
+  }, [dispatch])
 
   return (
     <Router basename='/'>
@@ -21,7 +68,8 @@ const App = () => {
         <Route exact path='/posts/:id' element={<PostDetail />} />
         <Route exact path='/prayer' element={<Prayer />} />
         <Route exact path='/profile' element={<Profile />} />
-        <Route exact path='/Categories' element={<Categories />} />
+        <Route exact path='/People' element={<Peoples isConnected={isConnected}/>} />
+        <Route exact path='/message/:id' element={<Messages isConnected={isConnected} />} />
       </Routes>
     </Router>
   )

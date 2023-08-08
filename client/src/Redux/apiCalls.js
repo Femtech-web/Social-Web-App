@@ -27,6 +27,26 @@ export const fetchAllPosts = async (dispatch) => {
     }
 }
 
+export const fetchPeople = async () => {
+    try {
+        const { data } = await publicRequest.get('/users');
+
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const fetchMessages = async () => {
+    try {
+        const { data } = await publicRequest.get('/messages');
+
+        return data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export const fetchAPost = async (dispatch, id) => {
     dispatch(fetchStart)
     try {
@@ -106,3 +126,5 @@ export const fetchComments = async (dispatch, comment, id) => {
         console.log(error); 
     }
 }
+
+
