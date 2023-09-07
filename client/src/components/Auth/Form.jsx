@@ -15,12 +15,14 @@ import { loginFailure } from '../../Redux/userRedux';
 const Form = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate();
-    const fetchError = useSelector(state => state.user.error)
+    const fetchError = useSelector(state => state.user.error);
+    const { isFetching } = useSelector(state => state.user)
 
     const [isSignUp, setIsSignUp ] = useState(false);
     const [ showPassword, setShowPassword ] = useState(false)
     const [ formData, setFormData ] = useState(initialForm);
-    const [ error, setError ] = useState(errorInitialState)
+    const [ error, setError ] = useState(errorInitialState);
+    const [ isRequesting, setIsRequesting ] = useState(false)
 
     const isFieldEmpty = isSignUp ? formData.fullname === '' || 
     formData.email === '' || formData.confirmPassword === '' || formData.password === ''
@@ -75,16 +77,14 @@ const Form = () => {
         e.preventDefault();
         const data = isSignUp ? formData : {email: formData.email, password: formData.password};
 
-        
         const error = await checkValidation();
         if(error){
             return;
         }
 
-        setFormData(initialForm)
-
-        await auth(dispatch, data, isSignUp, navigate)
-        setError(errorInitialState)
+        await auth(dispatch, data, isSignUp, navigate);
+        setError(errorInitialState);
+        setFormData(initialForm);
     };
 
     const login = useGoogleLogin({
@@ -94,16 +94,17 @@ const Form = () => {
 
   return (
     <FormData 
-        isSignUp={isSignUp}
-        setIsSignUp={setIsSignUp}
-        formData={formData}
-        handleChange={handleChange}
-        handleSubmit={handleSubmit}
-        handleClick={handleClick}
-        showPassword={showPassword}
-        error={error}
-        fetchError={fetchError}
-        login={login}
+      isSignUp={isSignUp}
+      setIsSignUp={setIsSignUp}
+      formData={formData}
+      handleChange={handleChange}
+      handleSubmit={handleSubmit}
+      handleClick={handleClick}
+      showPassword={showPassword}
+      error={error}
+      fetchError={fetchError}
+      login={login}
+      isRequesting={isFetching}
     />
   )
 }

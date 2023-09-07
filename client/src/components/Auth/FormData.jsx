@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unknown-property */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 
@@ -5,19 +6,31 @@ import React from 'react';
 import styles from './style';
 import { FcGoogle } from 'react-icons/fc';
 import  { MdVisibility, MdVisibilityOff } from 'react-icons/md';
+import LoaderSpinner from './loaderSpinner';
 
 import Input from './Input';
 
-const FormData = ({ isSignUp, setIsSignUp, formData, 
-handleChange, handleClick,  handleSubmit, 
-showPassword,  login, error, fetchError }) => {
+const FormData = ({ 
+  isSignUp, 
+  setIsSignUp, 
+  formData, 
+  handleChange, 
+  handleClick,  
+  handleSubmit, 
+  showPassword,  
+  login, 
+  error, 
+  fetchError,
+  isRequesting,
+  setIsRequesting 
+}) => {
     
   return (
     <form className={`${styles.formCont}`} onSubmit={handleSubmit}>
     <p className={styles.subHead}>
     {isSignUp 
-        ? 'Create an Account'
-        : 'Welcome Back'
+      ? 'Create an Account'
+      : 'Welcome Back'
     }
     </p>
     <p className='text-red-500 text-sm'>{error.emptyField 
@@ -65,8 +78,9 @@ showPassword,  login, error, fetchError }) => {
     placeholder='*******'
     handleChange={handleChange}
     />}
-
+      
     <div className='w-full mt-[15%]'>
+    {isRequesting && <LoaderSpinner styles='spin' variant='spin-small' />}
         <button className={styles.btn} type='submit'> 
             {isSignUp ? 'create my free account' : 'Log in'}
         </button>
