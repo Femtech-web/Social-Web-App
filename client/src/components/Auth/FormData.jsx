@@ -80,33 +80,41 @@ const FormData = ({
     />}
       
     <div className='w-full mt-[15%]'>
-    {isRequesting && <LoaderSpinner styles='spin' variant='spin-small' />}
-        <button className={styles.btn} type='submit'> 
-            {isSignUp ? 'create my free account' : 'Log in'}
-        </button>
-        <p className='text-center my-2'>OR</p>
-        <button className={styles.btn}
-            onClick={() => login()}> 
-            {isSignUp ? 'Sign up with Google' : 'Log in with Google'}
-            <FcGoogle fontSize={25} className='ml-4'/>
-        </button>
+      
+      <button 
+        className={styles.btn} 
+        type='submit' 
+        disabled={isRequesting}
+      > 
+        {isRequesting  
+        ? <LoaderSpinner styles='spin' variant='spin-small' /> 
+        : isSignUp ? 'create my free account' : 'Log in'}
+      </button>
+      <p className='text-center my-2'>OR</p>
+      <button className={styles.btn}
+        onClick={() => login()} 
+        disabled={isRequesting}
+      > 
+        {isSignUp ? 'Sign up with Google' : 'Log in with Google'}
+        <FcGoogle fontSize={25} className='ml-4'/>
+      </button>
     </div>
 
     {!isSignUp && <p className={styles.links2}>Forgot my password?</p>}
     <div className='mt-3 text-sm'>
-        { isSignUp 
-        ? "Already have an Account?" : "Don't have an account?"} 
-        &nbsp;
-        { isSignUp 
-        ? (<span className={styles.links}
-            onClick={() => setIsSignUp(false)}>
-            Log in
-            </span>) 
-        : (<span className={styles.links}
-            onClick={() => setIsSignUp(true)}>
-            Sign up
-        </span>)
-        }
+      { isSignUp 
+      ? "Already have an Account?" : "Don't have an account?"} 
+      &nbsp;
+      { isSignUp 
+      ? (<span className={styles.links}
+        onClick={() => setIsSignUp(false)}>
+        Log in
+        </span>) 
+      : (<span className={styles.links}
+        onClick={() => setIsSignUp(true)}>
+        Sign up
+      </span>)
+      }
     </div>
 </form>
   )
