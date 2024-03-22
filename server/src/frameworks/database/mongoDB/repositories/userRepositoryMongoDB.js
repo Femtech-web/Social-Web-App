@@ -1,6 +1,5 @@
-import UserModel from '../models/user';
+import UserModel from "../models/user";
 
-// move it to a proper place
 function omit(obj, ...props) {
   const result = { ...obj };
   props.forEach((prop) => delete result[prop]);
@@ -9,15 +8,15 @@ function omit(obj, ...props) {
 
 export default function userRepositoryMongoDB() {
   const findByProperty = (params) =>
-    UserModel.find(omit(params, 'page', 'perPage'))
+    UserModel.find(omit(params, "page", "perPage"))
       .skip(params.perPage * params.page - params.perPage)
       .limit(params.perPage);
 
   const countAll = (params) =>
-    UserModel.countDocuments(omit(params, 'page', 'perPage'));
+    UserModel.countDocuments(omit(params, "page", "perPage"));
 
-  const findById = (id) => UserModel.findById(id).select('-password');
-  const findByEmail = (email) => UserModel.findOne({email});
+  const findById = (id) => UserModel.findById(id).select("-password");
+  const findByEmail = (email) => UserModel.findOne({ email });
 
   const add = (userEntity) => {
     const newUser = new UserModel({
@@ -25,7 +24,7 @@ export default function userRepositoryMongoDB() {
       password: userEntity.Password,
       email: userEntity.Email,
       role: userEntity.Role,
-      createdAt: userEntity.CreatedAt
+      createdAt: userEntity.CreatedAt,
     });
 
     return newUser.save();
@@ -36,6 +35,6 @@ export default function userRepositoryMongoDB() {
     countAll,
     findById,
     findByEmail,
-    add
+    add,
   };
 }

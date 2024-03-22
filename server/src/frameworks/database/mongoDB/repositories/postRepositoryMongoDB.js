@@ -1,9 +1,9 @@
 import PostModel from "../models/post";
+import MessageModel from "../models/message";
 
 function omit(obj, ...props) {
   const result = { ...obj };
   props.forEach((prop) => delete result[prop]);
-  console.log(result);
   return result;
 }
 
@@ -23,6 +23,7 @@ export default function postRepositoryMongoDB() {
     PostModel.countDocuments(omit(params, "page", "perPage"));
 
   const findById = (id) => PostModel.findById(id);
+  const findAllMessage = () => MessageModel.find();
 
   const add = (postEntity) => {
     const newPost = new PostModel({
@@ -64,6 +65,7 @@ export default function postRepositoryMongoDB() {
     findAll,
     countAll,
     findBySearch,
+    findAllMessage,
     findById,
     add,
     updateById,

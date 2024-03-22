@@ -16,7 +16,6 @@ import incorrectRoutesMiddleware from './src/frameworks/webserver/middlewares/in
 
 const app = express();
 const server = http.createServer(app);
-// const ioInstance = io(server, );
 
 // EXPRESS.JS CONFIGURATION (middlewares etc.)
 expressConfig(app, cors);

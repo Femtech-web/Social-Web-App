@@ -1,17 +1,18 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const messageSchema = new mongoose.Schema({
-    sender: String,
-    receiver: String,
-    chatroom: String,
-    message: {
-        type: String,
-        default: ''
-    },
-    createdAt: {
-        type: Date,
-        default: new Date
-    }
-})
+  sender: String,
+  receiver: String,
+  chatroom: String,
+  message: {
+    type: String,
+    default: "",
+  },
+  createdAt: {
+    type: Date,
+    default: new Date(),
+  },
+});
 
-module.exports = mongoose.model('Message', messageSchema)
+const MessageModel = mongoose.model("Message", messageSchema);
+export default MessageModel;

@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 
-import { publicRequest, privateRequest } from "../axiosSetup";
+import { publicRequest, privateRequest } from "../configs/axiosSetup";
 import {
   loginStart,
   loginFailure,
@@ -25,7 +25,7 @@ export const auth = async (dispatch, form, signup, navigate) => {
   try {
     const { data } = await publicRequest.post(
       `${signup ? "/users" : "/login"}`,
-      form
+      form,
     );
 
     if (data) {
@@ -39,14 +39,13 @@ export const auth = async (dispatch, form, signup, navigate) => {
       }
     }
   } catch (error) {
-    console.log(error);
     dispatch(loginFailure(error.response.data.message));
     dispatch(
       setErrorMsg(
         error.response.data.message ||
           error.response.data.error ||
-          error.response.data
-      )
+          error.response.data,
+      ),
     );
   }
 };
@@ -57,13 +56,12 @@ export const fetchAllPosts = async (dispatch) => {
 
     dispatch(fetchPosts(data.posts));
   } catch (error) {
-    console.log(error);
     dispatch(
       setErrorMsg(
         error.response.data.message ||
           error.response.data.error ||
-          error.response.data
-      )
+          error.response.data,
+      ),
     );
   }
 };
@@ -96,13 +94,12 @@ export const fetchAPost = async (dispatch, id) => {
     await dispatch(fetchPost(data));
     dispatch(fetchEnd);
   } catch (error) {
-    console.log(error);
     dispatch(
       setErrorMsg(
         error.response.data.message ||
           error.response.data.error ||
-          error.response.data
-      )
+          error.response.data,
+      ),
     );
   }
 };
@@ -115,13 +112,12 @@ export const fetchPostsBySearch = async (dispatch, query) => {
     await dispatch(fetchBySearch(data));
     dispatch(fetchEnd());
   } catch (error) {
-    console.log(error);
     dispatch(
       setErrorMsg(
         error.response.data.message ||
           error.response.data.error ||
-          error.response.data
-      )
+          error.response.data,
+      ),
     );
   }
 };
@@ -133,13 +129,12 @@ export const savePost = async (dispatch, post, navigate) => {
     dispatch(createPost(data));
     navigate("/posts");
   } catch (error) {
-    console.log(error);
     dispatch(
       setErrorMsg(
         error.response.data.message ||
           error.response.data.error ||
-          error.response.data
-      )
+          error.response.data,
+      ),
     );
   }
 };
@@ -154,13 +149,12 @@ export const updatePost = async (dispatch, postToUpdate, navigate, id) => {
 
     navigate("/posts");
   } catch (error) {
-    console.log(error);
     dispatch(
       setErrorMsg(
         error.response.data.message ||
           error.response.data.error ||
-          error.response.data
-      )
+          error.response.data,
+      ),
     );
   }
 };
@@ -171,13 +165,12 @@ export const deletePost = async (dispatch, id) => {
 
     dispatch(removePost(id));
   } catch (error) {
-    console.log(error);
     dispatch(
       setErrorMsg(
         error.response.data.message ||
           error.response.data.error ||
-          error.response.data
-      )
+          error.response.data,
+      ),
     );
   }
 };
@@ -188,13 +181,12 @@ export const fetchLike = async (dispatch, id) => {
 
     dispatch(editPost(data));
   } catch (error) {
-    console.log(error);
     dispatch(
       setErrorMsg(
         error.response.data.message ||
           error.response.data.error ||
-          error.response.data
-      )
+          error.response.data,
+      ),
     );
   }
 };
@@ -203,19 +195,18 @@ export const fetchComments = async (dispatch, comment, id) => {
   try {
     const { data } = await privateRequest.post(
       `/posts/commentPost/${id}`,
-      comment
+      comment,
     );
 
     await dispatch(editPost(data));
     return data?.comments;
   } catch (error) {
-    console.log(error);
     dispatch(
       setErrorMsg(
         error.response.data.message ||
           error.response.data.error ||
-          error.response.data
-      )
+          error.response.data,
+      ),
     );
   }
 };

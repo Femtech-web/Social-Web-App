@@ -10,7 +10,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { BiSearch } from "react-icons/bi";
 
 import styles from "./style";
-import { useCustomState } from "../../responsive";
+import { useCustomState } from "../../configs/responsive";
 import { logout } from "../../Redux/userRedux";
 import { fetchPostsBySearch } from "../../Redux/apiCalls";
 
@@ -20,7 +20,7 @@ const Navbar = ({ searchQuery, setSearchQuery }) => {
   const navigate = useNavigate();
   const [mobile] = useCustomState();
   const [user, setUser] = useState(
-    JSON.parse(localStorage.getItem("bible-user")) || null
+    JSON.parse(localStorage.getItem("bible-user")) || null,
   );
   const {
     result: { picture },
