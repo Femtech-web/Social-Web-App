@@ -1,46 +1,42 @@
 import express from 'express';
-import dotenv from 'dotenv';
 import http from 'http';
 import mongoose from 'mongoose';
-import Redis from 'ioredis';
 import config from './src/config';
 import expressConfig from './src/frameworks/webserver/express';
 import serverConfig from './src/frameworks/webserver/server';
-import routes from './src/frameworks/webserver/routes';
+import routes from './src/frameworks/webserver/routes/index';
 import mongoDbConnection from './src/frameworks/database/mongoDB/connection';
 import redisConnection from './src/frameworks/database/redis/connection';
-// middlewares
+// MIDDLEWARES
 import errorHandlingMiddleware from './src/frameworks/webserver/middlewares/errorHandlingMiddleware';
+import incorrectRoutesMiddleware from './src/frameworks/webserver/middlewares/incorrectRoutesMiddleware';
 
 const app = express();
 const server = http.createServer(app);
-dotenv.config();
 
-// express.js configuration (middlewares etc.)
+// EXPRESS.JS CONFIGURATION (middlewares etc.)
 expressConfig(app);
 
-// server configuration and start
-serverConfig( server, config);
+// SERVER CONFIGURATION
+serverConfig(server, config);
 
-// DB configuration and connection create
+// DB CONFIGURATION AND CONNECTION
 mongoDbConnection(mongoose, config, {
   autoIndex: false,
-  useCreateIndex: true,
   useNewUrlParser: true,
-  autoReconnect: true,
-  reconnectTries: Number.MAX_VALUE,
-  reconnectInterval: 10000,
-  keepAlive: 120,
   connectTimeoutMS: 1000
 }).connectToMongo();
 
-const redisClient = redisConnection(Redis, config).createRedisClient();
+const redisClient = redisConnection(config).redisConnection;
 
-// routes for each endpoint
+// ROUTES FOR EACH ENDPOINT
 routes(app, express, redisClient);
 
-// error handling middleware
+// HANDLE INCORRECT ROUTES
+app.use('/api', incorrectRoutesMiddleware);
+
+// HANDLE ALL ERRORS
 app.use(errorHandlingMiddleware);
 
-// Expose app
+// EXPOSE APP
 export default app;

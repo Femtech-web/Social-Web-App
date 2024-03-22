@@ -7,3 +7,9 @@ export default function routes(app, express, redisClient) {
   app.use('/api/v1/users', userRouter(express, redisClient));
   app.use('/api/v1/login', authRouter(express, redisClient));
 }
+
+// "plugins": [
+//   ["@babel/plugin-transform-modules-commonjs", {
+//     "extensions": [".js", ".mjs"]
+//   }]
+// ]

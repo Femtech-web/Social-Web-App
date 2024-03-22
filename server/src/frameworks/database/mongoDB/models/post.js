@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose, { Schema } from "mongoose";
 
 const PostSchema = new mongoose.Schema({
     title: String,
@@ -30,17 +30,11 @@ const PostSchema = new mongoose.Schema({
 PostSchema.index({ userId: 1, title: 1 });
 PostSchema.index({ userId: 1, creator: 1 });
 PostSchema.index({ userId: 1, name: 1 });
-PostSchema.index({ userId: 1, context: 1 });
-PostSchema.index({ userId: 1, createdAt: 1 });
-PostSchema.index({ userId: 1, isPublished: 1 });
 
 const PostModel = mongoose.model('Post', PostSchema);
 
-PostModel.ensureIndexes((err) => {
-  if (err) {
-    return err;
-  }
-  return true;
+PostModel.on('index', (err) => {
+  if (err) console.error(err)
 });
 
 export default PostModel;

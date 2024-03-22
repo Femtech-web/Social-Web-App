@@ -1,8 +1,10 @@
-import authController from '../../../adapters/controllers/authController';
+import authController from '../../../controllers/authController';
 import userDbRepository from '../../../application/repositories/userDbRepository';
 import userDbRepositoryMongoDB from '../../database/mongoDB/repositories/userRepositoryMongoDB';
-import authServiceInterface from '../../../application/services/authService';
+import authServiceInterface from '../../../application/services/authServiceInterface';
 import authServiceImpl from '../../services/authService';
+import validatorErrorHandler from '../middlewares/validatorErrorHandler';
+import { requirePasswordExists, requireEmailExists } from '../middlewares/validatorsMiddleware'
 
 export default function authRouter(express) {
   const router = express.Router();
@@ -16,7 +18,12 @@ export default function authRouter(express) {
   );
 
   // POST endpoint
-  router.route('/').post(controller.loginUser);
+  router.route('/')
+    .post(
+      [
+        requirePasswordExists, 
+        requireEmailExists
+      ], validatorErrorHandler, controller.loginUser);
 
   return router;
 }

@@ -1,4 +1,4 @@
-import post from '../../../src/entities/post';
+import post from '../../../entities/post';
 import AppError from '../../../frameworks/services/appError';
 
 export default function updateById({

@@ -19,14 +19,13 @@ module.exports = {
     .normalizeEmail()
     .isEmail()
     .withMessage('Must be a valid email')
-    .custom( async email => {
+    .custom( email => {
       userRepository.findByEmail(email)
         .then((existingUser) => {
           if(existingUser){ 
             throw new AppError("Email in use", 403)
           }
-        }
-      );
+        });
     }),
 
   requirePassword: check('password')
@@ -38,41 +37,40 @@ module.exports = {
     .trim()
     .isLength({ min: 4, max: 20})
     .withMessage('Must be between 4 and 20 characters')
-    .custom(async (confirmPassword, { req }) => {
+    .custom((confirmPassword, { req }) => {
       if(confirmPassword !== req.body.password){
         throw new AppError('passwords must match', 401)
       }
     }),
 
-  requireEmailExists:  check('email')
+  requireEmailExists: check('email')
     .trim()
     .normalizeEmail()
     .isEmail()
     .withMessage('Must provide a valid email')
-    .custom(async (email) => {
+    .custom((email) => {
       userRepository.findByEmail(email)
         .then((user) => {
           if(!user){
             throw new AppError("Email not found", 404)
           };
-        }
-      );
+        });
     }),
 
   requirePasswordExists: check('password')
     .trim()
-    .custom(async (password, { req }) => {
+    .custom((password, { req }) => {
       userRepository.findByEmail(req.body.email)
         .then((user) => {
           if(!user){
             throw new AppError("Invalid password", 400)
           };
 
-          const isValidPassword = authService.comparePasswords(user.password, password);
+          return authService.comparePasswords(user.password, password);
+        }).then((isValidPassword) => {
           if(!isValidPassword){
             throw new AppError("Invalid password", 400)
           }
-        }
-      );
+        });
     })
 }

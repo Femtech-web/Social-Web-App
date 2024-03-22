@@ -1,8 +1,8 @@
 export default function authServiceInterface(service) {
-  const createHashedPassword = (password) => service.encryptPassword(password);
+  const createHashedPassword = (password) => service.createHashedPassword(password);
 
   const comparePasswords = (password, hashedPassword) =>
-    service.compare(password, hashedPassword);
+    service.comparePasswords(password, hashedPassword);
 
   const verify = (token) => service.verify(token);
 

@@ -1,7 +1,7 @@
-import addUser from '../../application/use_cases/user/add';
-import findByProperty from '../../application/use_cases/user/findByProperty';
-import countAll from '../../application/use_cases/user/countAll';
-import findById from '../../application/use_cases/user/findById';
+import addUser from '../application/use_cases/user/add';
+import findByProperty from '../application/use_cases/user/findByProperty';
+import countAll from '../application/use_cases/user/countAll';
+import findById from '../application/use_cases/user/findById';
 
 export default function userController(
   userDbRepository,

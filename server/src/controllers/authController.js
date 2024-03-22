@@ -1,4 +1,4 @@
-import login from '../../application/use_cases/auth/login';
+import login from '../application/use_cases/auth/login';
 
 export default function authController(
   userDbRepository,

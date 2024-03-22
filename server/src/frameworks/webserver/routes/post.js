@@ -1,8 +1,8 @@
-import postController from '../../../adapters/controllers/postController';
+import postController from '../../../controllers/postControllers';
 import postDbRepository from '../../../application/repositories/postDbRepository';
 import postDbRepositoryMongoDB from '../../database/mongoDB/repositories/postRepositoryMongoDB';
-import postRedisRepository from '../../../application/repositories/postRedisRepository';
-import postRedisRepositoryImpl from '../../database/redis/postRepositoryRedis';
+import postRedisRepository from '../../../application/repositories/redisPostRepository';
+import postRedisRepositoryImpl from '../../database/redis/redisPostRepository';
 import redisCachingMiddleware from '../middlewares/redisCachingMiddleware';
 import authMiddleware from '../middlewares/authMiddleware';
 

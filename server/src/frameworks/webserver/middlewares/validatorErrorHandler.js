@@ -1,4 +1,5 @@
 import AppError from '../../services/appError';
+import { validationResult } from 'express-validator';
 
 export default function validatorErrorHandler (req, res, next) {
   const errors = validationResult(req);
@@ -15,11 +16,11 @@ export default function validatorErrorHandler (req, res, next) {
   for(let error of newErrors){
     switch (error.path) {
       case 'email':
-        return next(new AppError(error.msg, 400));
+        throw new AppError(error.msg);
       case 'Password':
-        return next(new AppError(error.msg, 400));
+        throw new AppError(error.msg)
       case 'confirmPassword':
-        return next(new AppError(error.msg, 400));
+        throw new AppError(error.msg)
       default:
         return next();
     }

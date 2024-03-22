@@ -9,7 +9,6 @@ const UserSchema = new Schema({
   email: {
     type: String,
     required: true,
-    unique: true,
     lowercase: true
   },
   role: {
@@ -23,11 +22,8 @@ UserSchema.index({ role: 1 });
 
 const UserModel = mongoose.model('User', UserSchema);
 
-UserModel.ensureIndexes((err) => {
-  if (err) {
-    return err;
-  }
-  return true;
+UserModel.on('index', (err) => {
+  if (err) console.error(err)
 });
 
 export default UserModel;

@@ -27,4 +27,12 @@ export default function expressConfig(app) {
     message: 'Too many request from this IP, Please try again in 15 mins.',
   });
   app.use('/api', limiter);
+
+  // HEALTH CHECK
+  app.get('/', (req, res) => {
+    res.status(200).json({
+      status: "success", message: "Everything is good!"
+    });
+  });
+  
 }

@@ -8,9 +8,9 @@ const scrypt = util.promisify(crypto.scrypt);
 export default function authService() {
   const createHashedPassword = async (password) => {
     const salt = crypto.randomBytes(8).toString('hex');
-    const buf = await scrypt(password, salt, 64);
 
-    return `${buf.toString('hex')}.${salt}`
+    const buf = await scrypt(password, salt, 64);
+    return `${buf.toString('hex')}.${salt}`;
   };
 
   const comparePasswords = async (saved, supplied) => {
@@ -18,7 +18,6 @@ export default function authService() {
 
     const suppliedBuf = await scrypt(supplied, salt, 64);
     const suppliedHash = suppliedBuf.toString('hex');
-
     return hashed === suppliedHash;
   };
 
