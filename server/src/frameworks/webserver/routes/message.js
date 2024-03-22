@@ -1,4 +1,4 @@
-import findAllMessage from "../../database/mongoDB/repositories/post";
+import findAllMessage from "../../database/mongoDB/repositories/postRepositoryMongoDB";
 
 export default function messageRouter(express) {
   const router = express.Router();
