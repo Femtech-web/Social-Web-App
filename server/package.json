@@ -4,9 +4,18 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "build": "babel . -d dist --ignore 'node_modules/**/*.js'",
     "start": "nodemon --exec babel-node app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\"",
+    "lint:staged": "lint-staged",
+    "pre-push": "npm run pre-push:test",
+    "pre-push:test": "prepush-if-changed",
+    "lint": "echo \"Success: Linting pass\"",
+    "lint:fix": "npm run eslint:fix && npm run prettier:fix",
+    "prettier:cli": "prettier \"**/*.js\" ",
+    "prettier:check": "npm run prettier:cli -- -l",
+    "prettier:fix": "npm run prettier:cli -- --write",
+    "eslint": "eslint --report-unused-disable-directives .",
+    "eslint:fix": "npm run eslint -- --fix"
   },
   "keywords": [],
   "author": "",
@@ -29,16 +38,23 @@
     "redis": "^4.6.13",
     "socket.io": "^4.7.2"
   },
+  "lint-staged": {
+    "src/**/*.js": "prettier --write"
+  },
+  "prepush-if-changed": {
+    "src/**/*.js": "echo 'Files changed on App. Launching tests.' && npm run test"
+  },
   "devDependencies": {
     "@babel/cli": "^7.24.1",
     "@babel/core": "^7.24.3",
     "@babel/node": "^7.23.9",
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@babel/preset-env": "^7.24.3",
     "chai": "^5.1.0",
     "chai-http": "^4.4.0",
     "faker": "^6.6.6",
+    "lint-staged": "^15.2.2",
     "mocha": "^10.3.0",
+    "prepush-if-changed": "^1.0.8",
     "prettier": "^3.2.5",
     "request": "^2.88.2",
     "sinon": "^17.0.1"

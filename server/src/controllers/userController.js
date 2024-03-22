@@ -1,13 +1,13 @@
-import addUser from '../application/use_cases/user/add';
-import findByProperty from '../application/use_cases/user/findByProperty';
-import countAll from '../application/use_cases/user/countAll';
-import findById from '../application/use_cases/user/findById';
+import addUser from "../application/use_cases/user/add";
+import findByProperty from "../application/use_cases/user/findByProperty";
+import countAll from "../application/use_cases/user/countAll";
+import findById from "../application/use_cases/user/findById";
 
 export default function userController(
   userDbRepository,
   userDbRepositoryImpl,
   authServiceInterface,
-  authServiceImpl
+  authServiceImpl,
 ) {
   const dbRepository = userDbRepository(userDbRepositoryImpl());
   const authService = authServiceInterface(authServiceImpl());
@@ -57,15 +57,15 @@ export default function userController(
       role,
       createdAt,
       dbRepository,
-      authService
+      authService,
     )
-      .then((user) => res.status(201).json(user))
+      .then((user) => res.status(201).json({ user, type: "signup" }))
       .catch((error) => next(error));
   };
 
   return {
     fetchUsersByProperty,
     fetchUserById,
-    addNewUser
+    addNewUser,
   };
 }

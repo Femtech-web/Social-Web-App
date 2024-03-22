@@ -1,5 +1,5 @@
-import post from '../../../entities/post';
-import AppError from '../../../frameworks/services/appError';
+import post from "../../../entities/post";
+import AppError from "../../../frameworks/services/appError";
 
 export default function updateById({
   id,
@@ -7,19 +7,21 @@ export default function updateById({
   context,
   createdAt,
   name,
+  tags,
   userId,
-  postRepository
+  postRepository,
 }) {
   // validate
-  if (!title || !description) {
-    throw new AppError('title and description fields are mandatory', 400);
+  if (!title || !context) {
+    throw new AppError("title and description fields are mandatory", 400);
   }
   const updatedPost = post({
     title,
     context,
     createdAt,
     name,
-    userId
+    tags,
+    userId,
   });
 
   return postRepository.findById(id).then((foundPost) => {

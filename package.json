@@ -1,0 +1,31 @@
+{
+  "name": "social_app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install || true",
+    "lint": "npm-run-all lint:client lint:server",
+    "lint:client": "cd client && npm run lint:staged",
+    "lint:server": "cd server && npm run lint:staged",
+    "pre-push": "npm-run-all pre-push:client pre-push:server",
+    "pre-push:client": "cd client && npm run pre-push",
+    "pre-push:server": "cd server && npm run pre-push"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Femtech-web/social_webApp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Femtech-web/social_webApp/issues"
+  },
+  "homepage": "https://github.com/Femtech-web/social_webApp#readme",
+  "devDependencies": {
+    "husky": "^9.0.11",
+    "npm-run-all": "^4.1.5"
+  }
+}

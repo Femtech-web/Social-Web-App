@@ -1,29 +1,53 @@
-import Message from '../../database/mongoDB/models/message';
-import { getChatRoom } from './utilities';
+import Message from "../../database/mongoDB/models/message";
+import { getChatRoom } from "./utilities";
+// import cors from 'cors';
 
-export default (io) => {
-  io.on('connection', (socket) => {
-    const { userId } = socket.handshake.auth;
+export default (server, ioInstance, cors) => {
+  function startSocket() {
+    const io = ioInstance(server, {
+      cors: {
+        origin: "*",
+      },
+    });
 
-    socket.on('join room', async (recipentId) => {
-      const chatroom = getChatRoom(userId, recipentId);
+    io.on("connection", (socket) => {
+      const { userId } = socket.handshake.auth;
 
-      socket.join(chatroom);
+      socket.on("join room", async (recipentId) => {
+        const chatroom = getChatRoom(userId, recipentId);
 
-      io.to(chatroom).emit('roomId', chatroom);
-    })
+        socket.join(chatroom);
 
-    socket.on('sendMessage', async ({recipentId, message, chatroom}) => {
-      if(!chatroom){
+        io.to(chatroom).emit("roomId", chatroom);
+      });
+
+      socket.on("sendMessage", async ({ recipentId, message, chatroom }) => {
+        if (!chatroom) {
           return;
-      }
+        }
 
-      io.to(chatroom).emit('message', {sender: userId, receiver: recipentId,  message, createdAt: new Date().toISOString()})
+        io.to(chatroom).emit("message", {
+          sender: userId,
+          receiver: recipentId,
+          message,
+          createdAt: new Date().toISOString(),
+        });
 
-      const newMessage = new Message({ sender: userId, receiver: recipentId, chatroom, message, createdAt: new Date().toISOString()});
-      await newMessage.save();
-    })
+        const newMessage = new Message({
+          sender: userId,
+          receiver: recipentId,
+          chatroom,
+          message,
+          createdAt: new Date().toISOString(),
+        });
+        await newMessage.save();
+      });
 
-    socket.emit('started', 'Socket connection is running')
-  })
-}
+      socket.emit("started", "Socket connection is running");
+    });
+  }
+
+  return {
+    startSocket,
+  };
+};

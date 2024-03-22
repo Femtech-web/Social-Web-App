@@ -1,30 +1,30 @@
-import AppError from '../../services/appError';
-import { validationResult } from 'express-validator';
+import AppError from "../../services/appError";
+import { validationResult } from "express-validator";
 
-export default function validatorErrorHandler (req, res, next) {
+export default function validatorErrorHandler(req, res, next) {
   const errors = validationResult(req);
   let newErrors = [];
 
-  if(!errors.isEmpty()){
+  if (!errors.isEmpty()) {
     const mappedErrors = errors.mapped();
+    console.log(mappedErrors);
 
-    for(let key in mappedErrors){
+    for (let key in mappedErrors) {
       newErrors.push(mappedErrors[key]);
     }
   }
 
-  for(let error of newErrors){
+  for (let error of newErrors) {
     switch (error.path) {
-      case 'email':
+      case "email":
         throw new AppError(error.msg);
-      case 'Password':
-        throw new AppError(error.msg)
-      case 'confirmPassword':
-        throw new AppError(error.msg)
+      case "Password":
+        throw new AppError(error.msg);
+      case "confirmPassword":
+        throw new AppError(error.msg);
       default:
         return next();
     }
-              
   }
 
   next();
