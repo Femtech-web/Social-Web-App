@@ -1,35 +1,52 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const UserSlice = createSlice({
-  name: 'user',
+  name: "user",
   initialState: {
     currentUser: null,
     isFetching: false,
-    error: false
+    error: false,
+    errorMsg: "",
+    successMsg: "",
   },
   reducers: {
     loginStart: (state) => {
       state.isFetching = true;
     },
 
-    loginSuccess: (state, action) => {
+    loginSuccess: (state, action = {}) => {
       state.isFetching = false;
 
-      localStorage.setItem('user', JSON.stringify(action.payload))
-      state.currentUser = action.payload 
+      localStorage.setItem("bible-user", JSON.stringify(action.payload));
+      state.currentUser = action.payload;
     },
 
     loginFailure: (state, action) => {
-      state.isFetching=false;
-      state.error=action.payload;
+      state.isFetching = false;
+      state.error = action.payload;
     },
 
     logout: (state) => {
-      localStorage.clear()
+      localStorage.clear();
       state.currentUser = null;
-    }
-  }
-})
+    },
 
-export const { loginStart, loginFailure, loginSuccess, logout } = UserSlice.actions;
+    setErrorMsg: (state, action) => {
+      state.errorMsg = action.payload;
+    },
+
+    setSuccessMsg: (state, action) => {
+      state.successMsg = action.payload;
+    },
+  },
+});
+
+export const {
+  loginStart,
+  loginFailure,
+  loginSuccess,
+  logout,
+  setErrorMsg,
+  setSuccessMsg,
+} = UserSlice.actions;
 export default UserSlice.reducer;

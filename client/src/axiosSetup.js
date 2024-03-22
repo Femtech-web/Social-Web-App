@@ -10,10 +10,9 @@ const publicRequest = axios.create({
 });
 
 privateRequest.interceptors.request.use((req) => {
-  if (localStorage.getItem("user")) {
-    req.headers.authorization = `Bearer ${
-      JSON.parse(localStorage.getItem("user")).token
-    }`;
+  if (localStorage.getItem("bible-user")) {
+    const token = JSON.parse(localStorage.getItem("bible-user")).token;
+    req.headers.authorization = `Bearer ${token}`;
   }
 
   return req;

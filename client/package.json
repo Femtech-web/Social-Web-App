@@ -8,8 +8,18 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "jest",
+    "lint:staged": "lint-staged",
+    "pre-push": "npm run pre-push:test",
+    "pre-push:test": "prepush-if-changed",
+    "lint": "npm run prettier:check && npm run eslint",
+    "lint:fix": "npm run eslint:fix && npm run prettier:fix",
+    "prettier:cli": "prettier \"**/*.js\" \"**/*.jsx\"",
+    "prettier:check": "npm run prettier:cli -- -l",
+    "prettier:fix": "npm run prettier:cli -- --write",
+    "eslint": "eslint --report-unused-disable-directives .",
+    "eslint:fix": "npm run eslint -- --fix"
   },
   "dependencies": {
     "@react-oauth/google": "^0.11.0",
@@ -28,7 +38,17 @@
     "redux-persist": "^6.0.0",
     "socket.io-client": "^4.7.2"
   },
+  "lint-staged": {
+    "src/**/*.{js,jsx}": "eslint --cache --fix",
+    "*.{js,jsx}": "eslint --cache --fix",
+    "src/**/*.{js,jsx,css,scss,html,md}": "prettier --write"
+  },
+  "prepush-if-changed": {
+    "src/**/*.{js,jsx}": "echo 'Files changed on App. Launching tests.'"
+  },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.4.2",
+    "@testing-library/react": "^14.2.2",
     "@types/react": "^18.0.37",
     "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react": "^4.0.0",
@@ -37,7 +57,12 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.4",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "lint-staged": "^15.2.2",
     "postcss": "^8.4.24",
+    "prepush-if-changed": "^1.0.8",
+    "prettier": "^3.2.5",
     "tailwindcss": "^3.3.2",
     "vite": "^4.3.9"
   }

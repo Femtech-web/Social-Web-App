@@ -1,7 +1,13 @@
 /* eslint-disable no-unused-vars */
 
 import { publicRequest, privateRequest } from "../axiosSetup";
-import { loginStart, loginFailure, loginSuccess } from "./userRedux";
+import {
+  loginStart,
+  loginFailure,
+  loginSuccess,
+  setErrorMsg,
+  setSuccessMsg,
+} from "./userRedux";
 import {
   fetchPosts,
   fetchPost,
@@ -14,6 +20,7 @@ import {
 } from "./postRedux";
 
 export const auth = async (dispatch, form, signup, navigate) => {
+  console.log(form);
   dispatch(loginStart());
   try {
     const { data } = await publicRequest.post(
@@ -21,20 +28,43 @@ export const auth = async (dispatch, form, signup, navigate) => {
       form
     );
 
-    dispatch(loginSuccess(data));
-    navigate("/posts");
+    if (data) {
+      if (data.type === "signup" || signup) {
+        dispatch(setSuccessMsg("successful, login now!"));
+        return navigate("/auth");
+      } else {
+        dispatch(loginSuccess(data));
+        dispatch(setSuccessMsg("login successful!"));
+        return navigate("/posts");
+      }
+    }
   } catch (error) {
+    console.log(error);
     dispatch(loginFailure(error.response.data.message));
+    dispatch(
+      setErrorMsg(
+        error.response.data.message ||
+          error.response.data.error ||
+          error.response.data
+      )
+    );
   }
 };
 
 export const fetchAllPosts = async (dispatch) => {
   try {
-    const { data } = await publicRequest.get("/posts");
+    const { data } = await privateRequest.get("/posts");
 
-    dispatch(fetchPosts(data));
+    dispatch(fetchPosts(data.posts));
   } catch (error) {
     console.log(error);
+    dispatch(
+      setErrorMsg(
+        error.response.data.message ||
+          error.response.data.error ||
+          error.response.data
+      )
+    );
   }
 };
 
@@ -67,6 +97,13 @@ export const fetchAPost = async (dispatch, id) => {
     dispatch(fetchEnd);
   } catch (error) {
     console.log(error);
+    dispatch(
+      setErrorMsg(
+        error.response.data.message ||
+          error.response.data.error ||
+          error.response.data
+      )
+    );
   }
 };
 
@@ -79,6 +116,13 @@ export const fetchPostsBySearch = async (dispatch, query) => {
     dispatch(fetchEnd());
   } catch (error) {
     console.log(error);
+    dispatch(
+      setErrorMsg(
+        error.response.data.message ||
+          error.response.data.error ||
+          error.response.data
+      )
+    );
   }
 };
 
@@ -90,6 +134,13 @@ export const savePost = async (dispatch, post, navigate) => {
     navigate("/posts");
   } catch (error) {
     console.log(error);
+    dispatch(
+      setErrorMsg(
+        error.response.data.message ||
+          error.response.data.error ||
+          error.response.data
+      )
+    );
   }
 };
 
@@ -104,6 +155,13 @@ export const updatePost = async (dispatch, postToUpdate, navigate, id) => {
     navigate("/posts");
   } catch (error) {
     console.log(error);
+    dispatch(
+      setErrorMsg(
+        error.response.data.message ||
+          error.response.data.error ||
+          error.response.data
+      )
+    );
   }
 };
 
@@ -114,6 +172,13 @@ export const deletePost = async (dispatch, id) => {
     dispatch(removePost(id));
   } catch (error) {
     console.log(error);
+    dispatch(
+      setErrorMsg(
+        error.response.data.message ||
+          error.response.data.error ||
+          error.response.data
+      )
+    );
   }
 };
 
@@ -124,6 +189,13 @@ export const fetchLike = async (dispatch, id) => {
     dispatch(editPost(data));
   } catch (error) {
     console.log(error);
+    dispatch(
+      setErrorMsg(
+        error.response.data.message ||
+          error.response.data.error ||
+          error.response.data
+      )
+    );
   }
 };
 
@@ -138,5 +210,12 @@ export const fetchComments = async (dispatch, comment, id) => {
     return data?.comments;
   } catch (error) {
     console.log(error);
+    dispatch(
+      setErrorMsg(
+        error.response.data.message ||
+          error.response.data.error ||
+          error.response.data
+      )
+    );
   }
 };
