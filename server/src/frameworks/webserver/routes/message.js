@@ -7,4 +7,6 @@ export default function messageRouter(express) {
     const allMessage = await findAllMessage();
     res.status(200).json(allMessage);
   });
+
+  return router;
 }
