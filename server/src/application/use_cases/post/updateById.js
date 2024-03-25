@@ -11,7 +11,6 @@ export default function updateById({
   userId,
   postRepository,
 }) {
-  // validate
   if (!title || !context) {
     throw new AppError("title and description fields are mandatory", 400);
   }
