@@ -42,7 +42,7 @@
     "src/**/*.js": "prettier --write"
   },
   "prepush-if-changed": {
-    "src/**/*.js": "echo 'Files changed on App. Launching tests.' && npm run test"
+    "*/**/*.js": "echo 'Files changed on App. Launching tests.' && npm run test"
   },
   "devDependencies": {
     "@babel/cli": "^7.24.1",
