@@ -54,14 +54,14 @@ const handleSubmit = async (
 
     post = { ...inputText, tags: cat, img: filesUrl, name: fullname };
 
-    savePost(dispatch, post, navigate);
+    await savePost(dispatch, post, navigate);
     dispatch(fetchEnd());
 
     setSelectedFiles(null);
     console.log(filesUrl);
   } else {
     post = inputText;
-    updatePost(dispatch, post, navigate, editId);
+    await updatePost(dispatch, post, navigate, editId);
     dispatch(removeCurrentId());
   }
 

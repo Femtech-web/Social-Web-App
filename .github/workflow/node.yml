@@ -1,0 +1,47 @@
+name: Node.js CI
+
+on:
+  push:
+    branches: ["master"]
+
+jobs:
+  frontend:
+    name: Client test/build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install Node.js and dependencies
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.17.0
+          cache: "npm"
+
+      - name: Install dependencies and build
+        working-directory: client
+        run: |
+          npm ci
+          npm run test
+          npm run build --if-present
+
+  backend:
+    name: Sever test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install Node.js and dependencies
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.17.0
+          cache: "npm"
+
+      - name: Install backend dependencies and run tes
+        working-directory: server
+        run: |
+          npm ci
+          npm run test

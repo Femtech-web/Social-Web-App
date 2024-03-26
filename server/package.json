@@ -4,7 +4,11 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon --exec babel-node app.js",
+    "clean": "rm -rf build && mkdir build",
+    "build-server": "babel --out-dir ./build . --source-maps --copy-files --ignore node_modules",
+    "build": "npm run clean && npm run build-server",
+    "start": "pm2 start ./build/app.js -i ${NODE_PROCESSES} --no-daemon",
+    "dev": "nodemon --exec babel-node app.js",
     "test": "mocha --require @babel/register ./tests/**/*.test.js --timeout 30000",
     "lint:staged": "lint-staged",
     "pre-push": "npm run pre-push:test",
@@ -35,6 +39,7 @@
     "mongoose": "^7.3.0",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.22",
+    "pm2": "^5.3.1",
     "redis": "^4.6.13",
     "socket.io": "^4.7.2"
   },

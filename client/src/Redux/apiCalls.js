@@ -34,6 +34,7 @@ export const auth = async (
     );
 
     if (data) {
+      setIsRequesting(false);
       if (data.type === "signup" || signup) {
         dispatch(setSuccessMsg("successful, login now!"));
         return navigate("/auth");
@@ -44,6 +45,7 @@ export const auth = async (
       }
     }
   } catch (error) {
+    console.log(error);
     setIsRequesting(false);
     dispatch(loginFailure(error.response.data.message));
     dispatch(
@@ -74,7 +76,7 @@ export const fetchAllPosts = async (dispatch) => {
 
 export const fetchPeople = async () => {
   try {
-    const { data } = await publicRequest.get("/users");
+    const { data } = await privateRequest.get("/users");
 
     return data;
   } catch (error) {
@@ -132,8 +134,11 @@ export const savePost = async (dispatch, post, navigate) => {
   try {
     const { data } = await privateRequest.post("/posts", post);
 
-    dispatch(createPost(data));
-    navigate("/posts");
+    if (data) {
+      dispatch(createPost(data));
+      dispatch(setSuccessMsg("post created!"));
+      navigate("/posts");
+    }
   } catch (error) {
     dispatch(
       setErrorMsg(
@@ -150,10 +155,12 @@ export const updatePost = async (dispatch, postToUpdate, navigate, id) => {
   try {
     const { data } = await privateRequest.patch(`/posts/${id}`, postToUpdate);
 
-    await dispatch(editPost(data));
-    dispatch(fetchEnd());
-
-    navigate("/posts");
+    if (data) {
+      await dispatch(editPost(data));
+      dispatch(fetchEnd());
+      dispatch(setSuccessMsg("post updated!"));
+      navigate("/posts");
+    }
   } catch (error) {
     dispatch(
       setErrorMsg(
