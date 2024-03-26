@@ -44,15 +44,17 @@
     "src/**/*.{js,jsx,css,scss,html,md}": "prettier --write"
   },
   "prepush-if-changed": {
-    "src/**/*.{js,jsx}": "echo 'Files changed on App. Launching tests.'"
+    "src/**/*.{js,jsx}": "echo 'Files changed on App. Launching tests.' && npm run test"
   },
   "devDependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.24.1",
     "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "^14.2.2",
     "@types/react": "^18.0.37",
     "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react": "^4.0.0",
     "autoprefixer": "^10.4.14",
+    "babel-jest": "^29.7.0",
     "eslint": "^8.38.0",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",

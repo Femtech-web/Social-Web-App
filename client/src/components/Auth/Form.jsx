@@ -94,7 +94,7 @@ const Form = () => {
       return;
     }
 
-    await auth(dispatch, data, isSignUp, navigate, isFetching);
+    await auth(dispatch, data, isSignUp, navigate, setIsRequesting);
     setIsRequesting(false);
     setError(errorInitialState);
     setFormData(initialForm);

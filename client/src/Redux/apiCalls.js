@@ -19,8 +19,13 @@ import {
   fetchEnd,
 } from "./postRedux";
 
-export const auth = async (dispatch, form, signup, navigate) => {
-  console.log(form);
+export const auth = async (
+  dispatch,
+  form,
+  signup,
+  navigate,
+  setIsRequesting,
+) => {
   dispatch(loginStart());
   try {
     const { data } = await publicRequest.post(
@@ -39,6 +44,7 @@ export const auth = async (dispatch, form, signup, navigate) => {
       }
     }
   } catch (error) {
+    setIsRequesting(false);
     dispatch(loginFailure(error.response.data.message));
     dispatch(
       setErrorMsg(

@@ -3,7 +3,6 @@ import hpp from "hpp";
 import morgan from "morgan";
 import helmet from "helmet";
 import bodyParser from "body-parser";
-import rateLimit from "express-rate-limit";
 
 export default function expressConfig(app, cors) {
   app.use(cors());
@@ -20,13 +19,6 @@ export default function expressConfig(app, cors) {
   app.use(helmet({ contentSecurityPolicy: false }));
   app.use(morgan("combined"));
   app.use(hpp());
-  const limiter = rateLimit({
-    windowMs: 1 * 60 * 1000,
-    max: 200,
-    standardHeaders: "draft-7",
-    message: "Too many request from this IP, Please try again in 15 mins.",
-  });
-  app.use("/api", limiter);
 
   // HEALTH CHECK
   app.get("/", (req, res) => {
