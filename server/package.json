@@ -7,7 +7,7 @@
     "clean": "rm -rf build && mkdir build",
     "build-server": "babel --out-dir ./build . --source-maps --copy-files --ignore node_modules",
     "build": "npm run clean && npm run build-server",
-    "start": "pm2 start ./build/app.js -i ${NODE_PROCESSES} --no-daemon",
+    "start": "npm run build && pm2 start ./build/app.js -i ${NODE_PROCESSES} --no-daemon",
     "dev": "nodemon --exec babel-node app.js",
     "test": "mocha --require @babel/register ./tests/**/*.test.js --timeout 30000",
     "lint:staged": "lint-staged",

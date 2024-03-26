@@ -33,7 +33,6 @@ Welcome to the Social App project! This application is designed to connect Chris
 
 - **DevOps**:
   - Docker
-  - Docker Compose
   - GitHub Actions
   - Husky
 
