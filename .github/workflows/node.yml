@@ -22,7 +22,7 @@ jobs:
       - name: Install dependencies and build
         working-directory: client
         run: |
-          npm ci
+          npm ci --legacy-peer-deps
           npm run test
           npm run build --if-present
 
