@@ -1,0 +1,14 @@
+{
+  "name": "Christian Konnect",
+  "short_name": "Christian Konnect",
+  "icons": [
+    {
+      "src": "/images/logo.png",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "start_url": "https://social-app-zeta-six.vercel.app/",
+  "display": "standalone"
+}
